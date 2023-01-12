@@ -1,4 +1,4 @@
-import fetchLaptops from "./laptopFetcher.js"
+import {fetchLaptops, fetchImage} from "./laptopFetcher.js"
 
 const balanceElement = document.getElementById('balance')
 const loanElement = document.getElementById('loan')
@@ -10,14 +10,13 @@ const laptopsElement = document.getElementById('laptops')
 const selectedLaptopNameElement = document.getElementById('selectedLaptopName')
 const selectedLaptopDescElement = document.getElementById('selectedLaptopDesc')
 const selectedLaptopPriceElement = document.getElementById('selectedLaptopPrice')
+const selectedLaptopImageElement = document.getElementById('selectedLaptopImage')
 
-let balance = 0
-
-checkBalanceOrLoan(balance)
 
 const addLaptopsToList = (laptops) => {
     laptops.forEach(x => addLaptopToList(x));
-    selectedLaptopPriceElement.innerText = laptops[0].price;
+    //selectedLaptopPriceElement.innerText = laptops[0].price;
+    changeLaptopInfo(laptops[0])
 }
 
 const addLaptopToList = (laptop) => {
@@ -29,21 +28,20 @@ const addLaptopToList = (laptop) => {
 
 const handleLaptopListChange = e => {
     const selectedLaptop = laptops[e.target.selectedIndex];
+    changeLaptopInfo(selectedLaptop)
+}
+
+const changeLaptopInfo = selectedLaptop => {
     selectedLaptopNameElement.innerText = selectedLaptop.title;
+    //const localImageUrl = await fetchImage(selectedLaptop.image)
+    //selectedLaptopImageElement.src = localImageUrl
     selectedLaptopDescElement.innerText = selectedLaptop.description;
     selectedLaptopPriceElement.innerText = selectedLaptop.price;
 }
 
 laptopsElement.addEventListener("change", handleLaptopListChange);
 
-
-let laptops = []
-laptops = await fetchLaptops()
-addLaptopsToList(laptops)
-
-
-
-function checkBalanceOrLoan(balance){
+const checkBalanceOrLoan = balance => {
     if (balance >= 0){
         balanceElement.style.display = 'inline'
         loanElement.style.display = 'none'
@@ -52,3 +50,10 @@ function checkBalanceOrLoan(balance){
         loanElement.style.display = 'inline'
     }
 }
+
+let laptops = []
+laptops = await fetchLaptops()
+addLaptopsToList(laptops)
+let balance = -50
+
+checkBalanceOrLoan(balance)
