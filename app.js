@@ -1,23 +1,19 @@
-const balanceElement = document.getElementById('balance');
-const loanElement = document.getElementById('loan');
-const balanceValueElement = document.getElementById('balanceValue');
-const loanBtnElement = document.getElementById('loanBtn');
+import fetchLaptops from "./laptopFetcher.js"
 
-const laptopsElement = document.getElementById('laptops');
+const balanceElement = document.getElementById('balance')
+const loanElement = document.getElementById('loan')
+const balanceValueElement = document.getElementById('balanceValue')
+const loanBtnElement = document.getElementById('loanBtn')
 
-const selectedLaptopNameElement = document.getElementById('selectedLaptopName');
-const selectedLaptopDescElement = document.getElementById('selectedLaptopDesc');
-const selectedLaptopPriceElement = document.getElementById('selectedLaptopPrice');
+const laptopsElement = document.getElementById('laptops')
 
-let balance = 0;
-checkBalanceOrLoan(balance);
+const selectedLaptopNameElement = document.getElementById('selectedLaptopName')
+const selectedLaptopDescElement = document.getElementById('selectedLaptopDesc')
+const selectedLaptopPriceElement = document.getElementById('selectedLaptopPrice')
 
+let balance = 0
 
-let laptops = [];
-fetch('https://hickory-quilled-actress.glitch.me/computers')
-    .then(response => response.json())
-    .then(data => laptops = data)
-    .then(laptops => addLaptopsToList(laptops));
+checkBalanceOrLoan(balance)
 
 const addLaptopsToList = (laptops) => {
     laptops.forEach(x => addLaptopToList(x));
@@ -33,17 +29,26 @@ const addLaptopToList = (laptop) => {
 
 const handleLaptopListChange = e => {
     const selectedLaptop = laptops[e.target.selectedIndex];
+    selectedLaptopNameElement.innerText = selectedLaptop.title;
+    selectedLaptopDescElement.innerText = selectedLaptop.description;
     selectedLaptopPriceElement.innerText = selectedLaptop.price;
 }
 
 laptopsElement.addEventListener("change", handleLaptopListChange);
 
+
+let laptops = []
+laptops = await fetchLaptops()
+addLaptopsToList(laptops)
+
+
+
 function checkBalanceOrLoan(balance){
     if (balance >= 0){
-        balanceElement.style.display = 'inline';
-        loanElement.style.display = 'none';
+        balanceElement.style.display = 'inline'
+        loanElement.style.display = 'none'
     } else {
-        balanceElement.style.display = 'none';
-        loanElement.style.display = 'inline';
+        balanceElement.style.display = 'none'
+        loanElement.style.display = 'inline'
     }
 }
