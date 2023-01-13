@@ -13,6 +13,7 @@ const workBtnElement = document.getElementById('workBtn')
 const payloanBtnElement = document.getElementById('payLoanBtn')
 
 const laptopsElement = document.getElementById('laptops')
+const selectedLaptopFeatsElement = document.getElementById('selectedLaptopFeats')
 const selectedLaptopNameElement = document.getElementById('selectedLaptopName')
 const selectedLaptopDescElement = document.getElementById('selectedLaptopDesc')
 const selectedLaptopPriceElement = document.getElementById('selectedLaptopPrice')
@@ -37,6 +38,11 @@ const changeLaptopInfo = async (selectedLaptop) => {
     selectedLaptopImageElement.src = localImageUrl
     selectedLaptopDescElement.innerText = selectedLaptop.description
     selectedLaptopPriceElement.innerText = selectedLaptop.price
+
+    //fixa lista 
+    const selectedLaptopFeats = selectedLaptop.specs
+    while(selectedLaptopFeatsElement.lastChild) selectedLaptopFeatsElement.removeChild(selectedLaptopFeatsElement.lastChild)
+    selectedLaptopFeats.map((feat) => selectedLaptopFeatsElement.appendChild(document.createElement('li').appendChild(document.createTextNode(feat))))
 }
 
 //balance and loan checker

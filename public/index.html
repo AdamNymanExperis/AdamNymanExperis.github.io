@@ -11,7 +11,8 @@
     <header class="header">
         <h1>Komputer Store</h1>
     </header>
-    <div class="area" id="bank">
+
+    <div class="middle area" id="bank">
         <h2>Bank</h2>
         <span id="balance">Balance</span>
         <span id="balanceValue"></span>
@@ -24,7 +25,7 @@
         <button id="loanBtn">Get a loan</button>
     </div>
 
-    <div class="area" id="work">
+    <div class="middle area" id="work">
         <h2>Work</h2>
         <span>Pay</span>
         <span id="payBalance"></span>
@@ -34,14 +35,19 @@
         <button id="payLoanBtn">Pay loan</button>
     </div>
 
-    <div class="area" id="laptopsSelect">
+    <div class="middle area" id="laptopsSelect">
         <h2>Laptops</h2>
         <select name="laptops" id="laptops"></select>
+        <p>Features:</p>
+        <ul id="selectedLaptopFeats">
+            
+        </ul>
     </div>
-
     <div class="area" id="laptopsInfo">
         <h2 id="selectedLaptopName"></h2>
-        <img id="selectedLaptopImage">
+        <div id="imgContainer">
+            <img id="selectedLaptopImage">
+        </div>
         <p id="selectedLaptopDesc"></p>
         <span id="selectedLaptopPrice"></span>
         <span>NOK</span>

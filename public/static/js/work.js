@@ -10,7 +10,8 @@ const makePayment = () => {
 
 const work = {
     addPayment,
-    getBalance
+    getBalance,
+    makePayment
 }
 
 export default work

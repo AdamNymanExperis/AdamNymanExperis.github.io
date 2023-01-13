@@ -10,3 +10,21 @@
     margin: 5px;
     padding: 5px;
 }
+
+.middle{
+    width:33%;
+}
+
+#imgContainer{
+    width:200px;
+    height: 100px;
+}
+
+#selectedLaptopImage{
+    position: relative;
+    float: left;    
+    width: 100px;
+    height: 100px;
+    background-position: 50% 50%;
+}
+
