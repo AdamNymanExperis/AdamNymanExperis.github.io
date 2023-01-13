@@ -4,32 +4,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="static/css/style.css">
     <title>Document</title>
 </head>
 <body>
     <header class="header">
         <h1>Komputer Store</h1>
     </header>
-    <div id="bank">
+    <div class="area" id="bank">
         <h2>Bank</h2>
         <span id="balance">Balance</span>
-        <span id="loan">Outstanding loan</span>
         <span id="balanceValue"></span>
         <span> Kr.</span>
+        <div id="loan">
+            <span >Outstanding loan</span>
+            <span id="loanValue"></span>
+            <span> Kr.</span>
+        </div>
         <button id="loanBtn">Get a loan</button>
     </div>
 
-    <div id="work">
+    <div class="area" id="work">
         <h2>Work</h2>
+        <span>Pay</span>
+        <span id="payBalance"></span>
+        <span>Kr.</span>
+        <button id="bankBtn">Bank</button>
+        <button id="workBtn">Work</button>
+        <button id="payLoanBtn">Pay loan</button>
     </div>
 
-    <div id="laptopsSelect">
+    <div class="area" id="laptopsSelect">
         <h2>Laptops</h2>
         <select name="laptops" id="laptops"></select>
     </div>
 
-    <div id="laptopsInfo">
+    <div class="area" id="laptopsInfo">
         <h2 id="selectedLaptopName"></h2>
         <img id="selectedLaptopImage">
         <p id="selectedLaptopDesc"></p>
@@ -38,6 +48,6 @@
         <button>BUY NOW</button>
     </div>
     
-    <script src="app.js" type="module"></script>
+    <script src="static/js/app.js" type="module"></script>
 </body>
 </html>

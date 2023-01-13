@@ -4,3 +4,9 @@
     padding: 1px;
     padding-left: 75px;
 }
+
+.area{
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;
+}
