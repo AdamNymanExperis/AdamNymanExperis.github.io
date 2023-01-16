@@ -1,4 +1,4 @@
-let balance = 20 
+let balance = 0 
 let loan = 0
 
 const getBalance = () => balance
@@ -7,7 +7,7 @@ const removeFromBalance = (amount) => balance -= amount
     
 const getLoan = () => loan
 const setLoan = (newloan) => loan = newloan
-const repayLoan = (amount) => loan - amount
+const repayLoan = (amount) => loan -= amount
 
 const bank = {
     getBalance,

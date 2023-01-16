@@ -10,7 +10,7 @@ const loanBtnElement = document.getElementById('loanBtn')
 const payBalanceElement = document.getElementById('payBalance')
 const bankBtnElement = document.getElementById('bankBtn')
 const workBtnElement = document.getElementById('workBtn')
-const payloanBtnElement = document.getElementById('payLoanBtn')
+const payLoanBtnElement = document.getElementById('payLoanBtn')
 
 const laptopsElement = document.getElementById('laptops')
 const selectedLaptopFeatsElement = document.getElementById('selectedLaptopFeats')
@@ -18,6 +18,7 @@ const selectedLaptopNameElement = document.getElementById('selectedLaptopName')
 const selectedLaptopDescElement = document.getElementById('selectedLaptopDesc')
 const selectedLaptopPriceElement = document.getElementById('selectedLaptopPrice')
 const selectedLaptopImageElement = document.getElementById('selectedLaptopImage')
+const buyNowBtnElement = document.getElementById('buyNowBtn')
 
 //laptop list logic 
 const addLaptopsToList = (laptops) => {
@@ -34,15 +35,22 @@ const addLaptopToList = (laptop) => {
 
 const changeLaptopInfo = async (selectedLaptop) => {
     selectedLaptopNameElement.innerText = selectedLaptop.title
+
     const localImageUrl = await fetchImage(selectedLaptop.image)
     selectedLaptopImageElement.src = localImageUrl
+    
     selectedLaptopDescElement.innerText = selectedLaptop.description
     selectedLaptopPriceElement.innerText = selectedLaptop.price
 
-    //fixa lista 
     const selectedLaptopFeats = selectedLaptop.specs
     while(selectedLaptopFeatsElement.lastChild) selectedLaptopFeatsElement.removeChild(selectedLaptopFeatsElement.lastChild)
-    selectedLaptopFeats.map((feat) => selectedLaptopFeatsElement.appendChild(document.createElement('li').appendChild(document.createTextNode(feat))))
+    
+    selectedLaptopFeats.map((feat) => {
+        const newListItem = document.createElement('li')
+        newListItem.appendChild(document.createTextNode(feat))
+        selectedLaptopFeatsElement.appendChild(newListItem)
+        }
+    )
 }
 
 //balance and loan checker
@@ -53,11 +61,11 @@ const checkBalanceOrLoan = () => {
 
     if (bank.getLoan() <= 0){
         loanElement.style.display = 'none'
-        payloanBtnElement.style.display = 'none'
+        payLoanBtnElement.style.display = 'none'
         loanBtnElement.style.display = 'block'
     } else {
         loanElement.style.display = 'inline'
-        payloanBtnElement.style.display = 'inline'
+        payLoanBtnElement.style.display = 'inline'
         loanBtnElement.style.display = 'none'
     }
 }
@@ -70,22 +78,64 @@ const handleLaptopListChange = async (e) => {
 }
 
 const handleLoanBtnClick = e => {
-    let wantedLoan = prompt('please enter the amount of money you want to loan! (not more than twice your current bank balance)')
-    wantedLoan = parseFloat(wantedLoan)
-    if (wantedLoan <= (bank.getBalance()*2)){
-        bank.addToBalance(wantedLoan)
-        bank.setLoan(wantedLoan)
-        console.log(bank.getLoan())
-        checkBalanceOrLoan(bank)
-        alert('The loan was successful')
-    } else {
-        alert('The wanted amount was to high compared to current balance')
-    } 
+    if(bank.getLoan() <= 0){
+        let wantedLoan = prompt('please enter the amount of money you want to loan! (not more than twice your current bank balance)')
+        wantedLoan = parseFloat(wantedLoan)
+        if (wantedLoan <= (bank.getBalance()*2)){
+            bank.addToBalance(wantedLoan)
+            bank.setLoan(wantedLoan)
+            checkBalanceOrLoan()
+            alert('The loan was successful')
+        } else {
+            alert('The wanted amount was to high compared to current balance')
+        } 
+    }   
 }
 
 const handleWorkBtnClick = e => {
     work.addPayment()
     checkBalanceOrLoan()
+}
+
+const handleBankBtnClick = e => {
+    let change = 0
+    let paymentBalance = work.transferMoney()
+    if(bank.getLoan() > 0){
+        paymentBalance /= 10
+        const loan = bank.getLoan()
+        if(paymentBalance > loan){
+            change = paymentBalance - loan
+        }
+        bank.repayLoan(paymentBalance)
+        paymentBalance *= 9
+        paymentBalance += change
+    }
+    bank.addToBalance(paymentBalance)
+    checkBalanceOrLoan()
+}
+
+const handlePayLoanBtnClick = e => {
+    let change = 0
+    const paymentBalance = work.transferMoney()
+    const loan = bank.getLoan()
+    if(paymentBalance > loan){
+        change = paymentBalance - loan
+        bank.addToBalance(change)
+    }
+    bank.repayLoan(paymentBalance)
+    checkBalanceOrLoan()
+}
+
+const handleBuyNowBtnClick = e => {
+    const selectedLaptopPrice = laptops[laptopsElement.selectedIndex].price
+    if(bank.getBalance() >= selectedLaptopPrice){
+        bank.removeFromBalance(selectedLaptopPrice)
+        checkBalanceOrLoan()
+        alert('Purchase successful, congratulation to your new computer!')
+    }
+    else {
+        alert('Bank balance is not enough for this purchase')
+    }
 }
 
 let laptops = []
@@ -96,5 +146,8 @@ addLaptopsToList(laptops)
 laptopsElement.addEventListener('change', handleLaptopListChange)
 loanBtnElement.addEventListener('click', handleLoanBtnClick)
 workBtnElement.addEventListener('click', handleWorkBtnClick)
+bankBtnElement.addEventListener('click', handleBankBtnClick)
+payLoanBtnElement.addEventListener('click', handlePayLoanBtnClick)
+buyNowBtnElement.addEventListener('click', handleBuyNowBtnClick)
 
-checkBalanceOrLoan(bank)
+checkBalanceOrLoan()

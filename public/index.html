@@ -12,47 +12,57 @@
         <h1>Komputer Store</h1>
     </header>
 
-    <div class="middle area" id="bank">
-        <h2>Bank</h2>
-        <span id="balance">Balance</span>
-        <span id="balanceValue"></span>
-        <span> Kr.</span>
-        <div id="loan">
-            <span >Outstanding loan</span>
-            <span id="loanValue"></span>
-            <span> Kr.</span>
+    <div id="grid">
+        <div class="area" id="bank">
+            <h2>Bank</h2>
+            <div id="balance">
+                <span>Balance</span>
+                <span id="balanceValue"></span>
+                <span> Kr.</span>
+            </div>
+            <div id="loan">
+                <span >Outstanding loan</span>
+                <span id="loanValue"></span>
+                <span> Kr.</span>
+            </div>
+            <button id="loanBtn">Get a loan</button>
         </div>
-        <button id="loanBtn">Get a loan</button>
-    </div>
-
-    <div class="middle area" id="work">
-        <h2>Work</h2>
-        <span>Pay</span>
-        <span id="payBalance"></span>
-        <span>Kr.</span>
-        <button id="bankBtn">Bank</button>
-        <button id="workBtn">Work</button>
-        <button id="payLoanBtn">Pay loan</button>
-    </div>
-
-    <div class="middle area" id="laptopsSelect">
-        <h2>Laptops</h2>
-        <select name="laptops" id="laptops"></select>
-        <p>Features:</p>
-        <ul id="selectedLaptopFeats">
-            
-        </ul>
-    </div>
-    <div class="area" id="laptopsInfo">
-        <h2 id="selectedLaptopName"></h2>
-        <div id="imgContainer">
-            <img id="selectedLaptopImage">
+    
+        <div class="area" id="work">
+            <h2>Work</h2>
+            <div id="workText">
+                <span>Pay</span>
+                <span id="payBalance"></span>
+                <span>Kr.</span>
+            </div>
+            <button id="bankBtn">Bank</button>
+            <button id="workBtn">Work</button>
+            <button id="payLoanBtn">Pay loan</button>
         </div>
-        <p id="selectedLaptopDesc"></p>
-        <span id="selectedLaptopPrice"></span>
-        <span>NOK</span>
-        <button>BUY NOW</button>
-    </div>
+    
+        <div class="area" id="laptopsSelect">
+            <h2>Laptops</h2>
+            <select name="laptops" id="laptops"></select>
+            <p>Features:</p>
+            <ul id="selectedLaptopFeats">
+                
+            </ul>
+        </div>
+        <div class="area" id="laptopsInfo">
+            <div id="imgContainer">
+                <img id="selectedLaptopImage" alt="Laptop image">
+            </div>
+            <div id="laptopInfo">
+                <h2 id="selectedLaptopName"></h2>
+                <p id="selectedLaptopDesc"></p>
+            </div>
+            <div id="priceInfo">
+                <span id="selectedLaptopPrice"></span>
+                <span>NOK</span>
+            </div>
+            <button id="buyNowBtn">BUY NOW</button>
+        </div>
+    </div> 
     
     <script src="static/js/app.js" type="module"></script>
 </body>

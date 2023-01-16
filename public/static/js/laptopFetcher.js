@@ -16,7 +16,24 @@ export async function fetchImage(imageUrl){
         const localImageUrl = URL.createObjectURL(imageBlob)
         return localImageUrl
     } catch(error){
-        console.log(error)
+        console.log("not working")
+        /*
+        const split = imageUrl.split('.')
+        const end = split[1]
+        if(end === 'jpg'){
+            end = 'png'
+            imageUrl = split[0] + '.' + end
+            fetchImage(imageUrl)
+        }
+        else if (end === 'png'){
+            end = 'jpg'
+            imageUrl = split[0] + '.' + end
+            fetchImage(imageUrl)
+        }
+        else {
+            console.log(error)
+        }
+        */
     }
 }
 

@@ -1,3 +1,95 @@
+#grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    grid-auto-rows: repeat(2, 1fr);
+}
+
+#bank{
+    grid-column: 1;
+    grid-row: 1;  
+
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+    grid-auto-rows: repeat(1, 1fr);
+}
+
+#work{
+    grid-column: 2;
+    grid-row: 1; 
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    grid-auto-rows: repeat(1, 1fr);
+}
+
+#workText{
+    grid-column: 1/2;
+}
+
+#workBtn{
+    grid-column:1;
+    grid-row: 3;
+}
+
+#bankBtn{
+    grid-column:2;
+    grid-row:3;
+}
+
+#payLoanBtn{}
+
+#laptopsSelect{
+    grid-column: 3/5;
+    grid-row: 1;
+}
+
+#laptopsInfo{
+    grid-column: 1 / 5;
+    grid-row: 2;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    grid-auto-rows: repeat(1, 1fr);
+}
+
+#imgContainer{
+    padding: 0px;
+    margin: 0px;
+    grid-column: 1;
+    grid-row: 1/3;
+    max-width: 100%;
+}
+
+#selectedLaptopImage{
+    padding: 0px;
+    margin: 0px;
+    max-height: 200px;
+}
+
+#laptopInfo{
+    grid-column: 2 / 3;
+    grid-row: 1/3; 
+}
+
+#priceInfo{
+    grid-column: 4 / 6; 
+    grid-row: 1;
+    text-align: center;
+    padding-top: 30px;
+}
+
+#buyNowBtn{
+    grid-column: 4 / 6;
+    grid-row: 2;
+
+    margin-bottom: 50px;
+}
+
+
 .header{
     background-color: black;
     color: white;
@@ -11,20 +103,9 @@
     padding: 5px;
 }
 
-.middle{
-    width:33%;
-}
-
-#imgContainer{
-    width:200px;
-    height: 100px;
-}
-
-#selectedLaptopImage{
-    position: relative;
-    float: left;    
-    width: 100px;
-    height: 100px;
-    background-position: 50% 50%;
+#selectedLaptopFeats{
+    font-size: small;
+    list-style-type: none;
+    padding:0px;
 }
 
