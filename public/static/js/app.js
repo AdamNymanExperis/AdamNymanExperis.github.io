@@ -20,12 +20,14 @@ const selectedLaptopPriceElement = document.getElementById('selectedLaptopPrice'
 const selectedLaptopImageElement = document.getElementById('selectedLaptopImage')
 const buyNowBtnElement = document.getElementById('buyNowBtn')
 
-//laptop list logic 
+//---Logic for adding all the laptops to the list as well as updating the UI with all the laptop information----------------------------------------------
+
 const addLaptopsToList = (laptops) => {
     laptops.forEach(x => addLaptopToList(x))
     changeLaptopInfo(laptops[0])
 }
 
+//creates html elements for each laptop fetched from the api 
 const addLaptopToList = (laptop) => {
     const laptopElement = document.createElement('option')
     laptopElement.value = laptop.id
@@ -33,6 +35,7 @@ const addLaptopToList = (laptop) => {
     laptopsElement.appendChild(laptopElement)
 }
 
+//updates all the computer information that is displayed in the UI 
 const changeLaptopInfo = async (selectedLaptop) => {
     selectedLaptopNameElement.innerText = selectedLaptop.title
 
@@ -43,7 +46,9 @@ const changeLaptopInfo = async (selectedLaptop) => {
     selectedLaptopPriceElement.innerText = selectedLaptop.price
 
     const selectedLaptopFeats = selectedLaptop.specs
-    while(selectedLaptopFeatsElement.lastChild) selectedLaptopFeatsElement.removeChild(selectedLaptopFeatsElement.lastChild)
+    while(selectedLaptopFeatsElement.lastChild){
+        selectedLaptopFeatsElement.removeChild(selectedLaptopFeatsElement.lastChild)
+    } 
     
     selectedLaptopFeats.map((feat) => {
         const newListItem = document.createElement('li')
@@ -53,12 +58,15 @@ const changeLaptopInfo = async (selectedLaptop) => {
     )
 }
 
+//When the dropdown list is changed it should change the currently selected computer
 const handleLaptopListChange = async (e) => {
     const selectedLaptop = laptops[e.target.selectedIndex]
     changeLaptopInfo(selectedLaptop)
 }
 
-// Event handlerer for the "loan" button in the "Bank" section
+//---Event handlerer for the "loan" button in the "Bank" section----------------------------------------------
+
+//When clicking the button the user could ask for a loan, the request is accepted if the amount is lower then 2 times their current balance
 const handleLoanBtnClick = e => {
     if(bank.getLoan() <= 0){
         let wantedLoan = prompt('please enter the amount of money you want to loan! (not more than twice your current bank balance)')
@@ -74,12 +82,15 @@ const handleLoanBtnClick = e => {
     }   
 }
 
-// Event handlerers for the different buttons in the "Work" section
+//---Event handlerers for the different buttons in the "Work" section---------------------------------------------
+
+//When clicking the button 100 kr is added to the work payment balance
 const handleWorkBtnClick = e => {
     work.addPayment()
     updateUI()
 }
 
+//When clicking the button the money should be transfered from work balance to bank balance (10% goes automatic to loan balance)
 const handleBankBtnClick = e => {
     let change = 0
     let paymentBalance = work.transferMoney()
@@ -97,6 +108,7 @@ const handleBankBtnClick = e => {
     updateUI()
 }
 
+//When clicking the button all money should be transfered from work balance to loan balance
 const handlePayLoanBtnClick = e => {
     let change = 0
     const paymentBalance = work.transferMoney()
@@ -109,6 +121,7 @@ const handlePayLoanBtnClick = e => {
     updateUI()
 }
 
+//When clicking on the button the user pays for the selected laptop using the money in the bank balance
 const handleBuyNowBtnClick = e => {
     const selectedLaptopPrice = laptops[laptopsElement.selectedIndex].price
     if(bank.getBalance() >= selectedLaptopPrice){
@@ -142,7 +155,6 @@ const updateUI = () => {
 
 let laptops = []
 
-//
 laptops = await fetchLaptops()
 addLaptopsToList(laptops)
 
