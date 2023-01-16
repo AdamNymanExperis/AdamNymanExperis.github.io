@@ -53,30 +53,12 @@ const changeLaptopInfo = async (selectedLaptop) => {
     )
 }
 
-//balance and loan checker
-const checkBalanceOrLoan = () => {
-    balanceValueElement.innerText = bank.getBalance()
-    loanValueElement.innerText = bank.getLoan()
-    payBalanceElement.innerText = work.getBalance()
-
-    if (bank.getLoan() <= 0){
-        loanElement.style.display = 'none'
-        payLoanBtnElement.style.display = 'none'
-        loanBtnElement.style.display = 'block'
-    } else {
-        loanElement.style.display = 'inline'
-        payLoanBtnElement.style.display = 'inline'
-        loanBtnElement.style.display = 'none'
-    }
-}
-
-
-//eventlisteners
 const handleLaptopListChange = async (e) => {
     const selectedLaptop = laptops[e.target.selectedIndex]
     changeLaptopInfo(selectedLaptop)
 }
 
+// Event handlerer for the "loan" button in the "Bank" section
 const handleLoanBtnClick = e => {
     if(bank.getLoan() <= 0){
         let wantedLoan = prompt('please enter the amount of money you want to loan! (not more than twice your current bank balance)')
@@ -84,7 +66,7 @@ const handleLoanBtnClick = e => {
         if (wantedLoan <= (bank.getBalance()*2)){
             bank.addToBalance(wantedLoan)
             bank.setLoan(wantedLoan)
-            checkBalanceOrLoan()
+            updateUI()
             alert('The loan was successful')
         } else {
             alert('The wanted amount was to high compared to current balance')
@@ -92,9 +74,10 @@ const handleLoanBtnClick = e => {
     }   
 }
 
+// Event handlerers for the different buttons in the "Work" section
 const handleWorkBtnClick = e => {
     work.addPayment()
-    checkBalanceOrLoan()
+    updateUI()
 }
 
 const handleBankBtnClick = e => {
@@ -111,7 +94,7 @@ const handleBankBtnClick = e => {
         paymentBalance += change
     }
     bank.addToBalance(paymentBalance)
-    checkBalanceOrLoan()
+    updateUI()
 }
 
 const handlePayLoanBtnClick = e => {
@@ -123,14 +106,14 @@ const handlePayLoanBtnClick = e => {
         bank.addToBalance(change)
     }
     bank.repayLoan(paymentBalance)
-    checkBalanceOrLoan()
+    updateUI()
 }
 
 const handleBuyNowBtnClick = e => {
     const selectedLaptopPrice = laptops[laptopsElement.selectedIndex].price
     if(bank.getBalance() >= selectedLaptopPrice){
         bank.removeFromBalance(selectedLaptopPrice)
-        checkBalanceOrLoan()
+        updateUI()
         alert('Purchase successful, congratulation to your new computer!')
     }
     else {
@@ -138,16 +121,37 @@ const handleBuyNowBtnClick = e => {
     }
 }
 
+//Updates the different values for the different balances as well as change visiability on some of the elements
+const updateUI = () => {
+    balanceValueElement.innerText = bank.getBalance()
+    loanValueElement.innerText = bank.getLoan()
+    payBalanceElement.innerText = work.getBalance()
+
+    if (bank.getLoan() <= 0){
+        loanElement.style.display = 'none'
+        payLoanBtnElement.style.display = 'none'
+        loanBtnElement.style.display = 'block'
+    } else {
+        loanElement.style.display = 'inline'
+        payLoanBtnElement.style.display = 'inline'
+        loanBtnElement.style.display = 'none'
+    }
+}
+
+// "Main" the part where the actually instantiation start
+
 let laptops = []
 
+//
 laptops = await fetchLaptops()
 addLaptopsToList(laptops)
 
 laptopsElement.addEventListener('change', handleLaptopListChange)
+
 loanBtnElement.addEventListener('click', handleLoanBtnClick)
 workBtnElement.addEventListener('click', handleWorkBtnClick)
 bankBtnElement.addEventListener('click', handleBankBtnClick)
 payLoanBtnElement.addEventListener('click', handlePayLoanBtnClick)
 buyNowBtnElement.addEventListener('click', handleBuyNowBtnClick)
 
-checkBalanceOrLoan()
+updateUI()
