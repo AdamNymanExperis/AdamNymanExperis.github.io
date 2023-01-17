@@ -8,10 +8,10 @@ also follows a number of different rules for how it should handle the loans and 
 All the information regarding the laptops are fetched from an API. 
 
 ## Github Pages
-this application is hosted on github pages on the following link: 
-https://adamnymanexperis.github.io/public/index.html
-the repository is found on the following link: 
-https://github.com/AdamNymanExperis/AdamNymanExperis.github.io
+this application is hosted on github pages on the following link: <br />
+<https://adamnymanexperis.github.io/public/index.html> <br />
+the repository is found on the following link: <br />
+<https://github.com/AdamNymanExperis/AdamNymanExperis.github.io> <br />
 
 ## Installation guide: 
 The application is a normal javascript application that just uses vanilla javascript, html and css. There are alot of ways to install/run this application but an example
