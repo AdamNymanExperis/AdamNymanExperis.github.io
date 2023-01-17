@@ -7,7 +7,11 @@ also follows a number of different rules for how it should handle the loans and 
 
 All the information regarding the laptops are fetched from an API. 
 
-Installation guide: 
+##Github Pages
+this application is hosted on github pages on the following link: 
+https://adamnymanexperis.github.io/public/index.html
+
+## Installation guide: 
 The application is a normal javascript application that just uses vanilla javascript, html and css. There are alot of ways to install/run this application but an example
 is to open it with the visual studio code extension "Live Server": 
 - Download the code from the git repository
