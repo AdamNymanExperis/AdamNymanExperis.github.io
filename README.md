@@ -23,5 +23,3 @@ is to open it with the visual studio code extension "Live Server":
 - Open the project folder in Visual studio code
 - Find the index.html file and right-click and select the option "open with live server" 
 - The application will then open in your web browser
-
-AdamNymanExperis.github.io/tree/main/public
