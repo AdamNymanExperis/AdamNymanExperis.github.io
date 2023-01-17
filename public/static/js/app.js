@@ -18,7 +18,6 @@ const selectedLaptopNameElement = document.getElementById('selectedLaptopName')
 const selectedLaptopDescElement = document.getElementById('selectedLaptopDesc')
 const selectedLaptopPriceElement = document.getElementById('selectedLaptopPrice')
 const selectedLaptopImgContainer = document.getElementById('imgContainer')
-//const selectedLaptopImageElement = document.getElementById('selectedLaptopImage')
 const buyNowBtnElement = document.getElementById('buyNowBtn')
 
 //---Logic for adding all the laptops to the list as well as updating the UI with all the laptop information----------------------------------------------
