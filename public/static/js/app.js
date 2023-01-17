@@ -1,4 +1,4 @@
-import {fetchLaptops, fetchImage} from "./laptopFetcher.js"
+import fetchLaptops from "./laptopFetcher.js"
 import bank from "./bank.js"
 import work from "./work.js"
 
@@ -17,7 +17,8 @@ const selectedLaptopFeatsElement = document.getElementById('selectedLaptopFeats'
 const selectedLaptopNameElement = document.getElementById('selectedLaptopName')
 const selectedLaptopDescElement = document.getElementById('selectedLaptopDesc')
 const selectedLaptopPriceElement = document.getElementById('selectedLaptopPrice')
-const selectedLaptopImageElement = document.getElementById('selectedLaptopImage')
+const selectedLaptopImgContainer = document.getElementById('imgContainer')
+//const selectedLaptopImageElement = document.getElementById('selectedLaptopImage')
 const buyNowBtnElement = document.getElementById('buyNowBtn')
 
 //---Logic for adding all the laptops to the list as well as updating the UI with all the laptop information----------------------------------------------
@@ -39,22 +40,22 @@ const addLaptopToList = (laptop) => {
 const changeLaptopInfo = async (selectedLaptop) => {
     selectedLaptopNameElement.innerText = selectedLaptop.title
 
-    const localImageUrl = await fetchImage(selectedLaptop.image)
-    selectedLaptopImageElement.src = localImageUrl
-    
+    //const localImageUrl = await fetchImage(selectedLaptop.image)
+    imageElement.src = 'https://hickory-quilled-actress.glitch.me/' + selectedLaptop.image
+
     selectedLaptopDescElement.innerText = selectedLaptop.description
     selectedLaptopPriceElement.innerText = selectedLaptop.price
 
     const selectedLaptopFeats = selectedLaptop.specs
-    while(selectedLaptopFeatsElement.lastChild){
+    while (selectedLaptopFeatsElement.lastChild) {
         selectedLaptopFeatsElement.removeChild(selectedLaptopFeatsElement.lastChild)
-    } 
-    
+    }
+
     selectedLaptopFeats.map((feat) => {
         const newListItem = document.createElement('li')
         newListItem.appendChild(document.createTextNode(feat))
         selectedLaptopFeatsElement.appendChild(newListItem)
-        }
+    }
     )
 }
 
@@ -68,18 +69,22 @@ const handleLaptopListChange = async (e) => {
 
 //When clicking the button the user could ask for a loan, the request is accepted if the amount is lower then 2 times their current balance
 const handleLoanBtnClick = e => {
-    if(bank.getLoan() <= 0){
+    if (bank.getLoan() <= 0) {
         let wantedLoan = prompt('please enter the amount of money you want to loan! (not more than twice your current bank balance)')
         wantedLoan = parseFloat(wantedLoan)
-        if (wantedLoan <= (bank.getBalance()*2)){
+        if(wantedLoan > (bank.getBalance() * 2)) {
+            alert('The wanted amount was to high compared to current balance')
+        } else if(wantedLoan < 0){
+            alert('You can not loan an negative amount')
+        } else if (wantedLoan <= (bank.getBalance() * 2)) {
             bank.addToBalance(wantedLoan)
             bank.setLoan(wantedLoan)
             updateUI()
             alert('The loan was successful')
         } else {
-            alert('The wanted amount was to high compared to current balance')
-        } 
-    }   
+            alert('Something went wrong, please select another amount')
+        }
+    }
 }
 
 //---Event handlerers for the different buttons in the "Work" section---------------------------------------------
@@ -94,10 +99,10 @@ const handleWorkBtnClick = e => {
 const handleBankBtnClick = e => {
     let change = 0
     let paymentBalance = work.transferMoney()
-    if(bank.getLoan() > 0){
+    if (bank.getLoan() > 0) {
         paymentBalance /= 10
         const loan = bank.getLoan()
-        if(paymentBalance > loan){
+        if (paymentBalance > loan) {
             change = paymentBalance - loan
         }
         bank.repayLoan(paymentBalance)
@@ -113,7 +118,7 @@ const handlePayLoanBtnClick = e => {
     let change = 0
     const paymentBalance = work.transferMoney()
     const loan = bank.getLoan()
-    if(paymentBalance > loan){
+    if (paymentBalance > loan) {
         change = paymentBalance - loan
         bank.addToBalance(change)
     }
@@ -124,7 +129,7 @@ const handlePayLoanBtnClick = e => {
 //When clicking on the button the user pays for the selected laptop using the money in the bank balance
 const handleBuyNowBtnClick = e => {
     const selectedLaptopPrice = laptops[laptopsElement.selectedIndex].price
-    if(bank.getBalance() >= selectedLaptopPrice){
+    if (bank.getBalance() >= selectedLaptopPrice) {
         bank.removeFromBalance(selectedLaptopPrice)
         updateUI()
         alert('Purchase successful, congratulation to your new computer!')
@@ -140,7 +145,7 @@ const updateUI = () => {
     loanValueElement.innerText = bank.getLoan()
     payBalanceElement.innerText = work.getBalance()
 
-    if (bank.getLoan() <= 0){
+    if (bank.getLoan() <= 0) {
         loanElement.style.display = 'none'
         payLoanBtnElement.style.display = 'none'
         loanBtnElement.style.display = 'block'
@@ -151,9 +156,25 @@ const updateUI = () => {
     }
 }
 
-// "Main" the part where the actually instantiation start
+//creates a new image element in the image container element
+const createImageElement = () => {
+    const imageElement = new Image()
 
+    imageElement.onload = () => {
+        selectedLaptopImgContainer.appendChild(imageElement)        
+    }
+    imageElement.onerror = () => {
+        imageElement.src = '/assignment1/public/error.png'
+    }
+    imageElement.id = 'selectedLaptopImage' 
+
+    return imageElement
+}
+
+// "Main" the part where the actually instantiation start
 let laptops = []
+
+const imageElement = createImageElement()
 
 laptops = await fetchLaptops()
 addLaptopsToList(laptops)
