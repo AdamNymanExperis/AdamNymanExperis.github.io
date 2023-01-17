@@ -7,7 +7,7 @@ also follows a number of different rules for how it should handle the loans and 
 
 All the information regarding the laptops are fetched from an API. 
 
-##Github Pages
+## Github Pages
 this application is hosted on github pages on the following link: 
 https://adamnymanexperis.github.io/public/index.html
 
